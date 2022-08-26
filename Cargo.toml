@@ -1,0 +1,63 @@
+[package]
+name = "flocked-and-loaded"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy_egui = "0.15"
+iyes_loopless = "0.7.0"
+num-traits = "0.2.15"
+bevy-inspector-egui = "0.12.1"
+bevy-inspector-egui-rapier = { version = "0.5", features = ["rapier3d"] }
+itertools = "0.10.3"
+noise = "0.7.0"
+bevy_rapier3d = "0.16.0"
+bevy_mod_picking = "0.8"
+rand = "0.8.5"
+serde = "1.0.144"
+serde_json = "1.0.85"
+
+
+# Enable a small amount of optimization in debug mode
+[profile.dev]
+opt-level = 1
+
+# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
+[profile.dev.package."*"]
+opt-level = 3
+
+
+[dependencies.bevy]
+version = "0.8"
+default-features = false
+# These are the remaining default features other than `bevy_audio` and `vorbis`
+features = [
+  "render",
+  "animation",
+  "bevy_asset",
+  "bevy_scene",
+  "bevy_winit",
+  "bevy_gilrs",
+  "png",
+  "hdr",
+  "filesystem_watcher",
+  "x11"
+]
+
+[dependencies.bevy_kira_audio]
+version = "0.12"
+# `ogg` format support is enabled by default, disable if you don't want it
+default-features = false
+# enable the features you care about
+features = [
+  #"wav",
+  #"flac",
+  "mp3",
+  #"ogg",
+]
+
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-w64-mingw32-gcc"
+ar = "x86_64-w64-mingw32-gcc-ar"
