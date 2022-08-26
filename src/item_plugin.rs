@@ -24,7 +24,6 @@ pub struct EquipGiveEvent {
 
 #[derive(Debug, Clone, Copy)]
 pub enum ItemType {
-    Axe,
     Cage,
     Launcher,
     Bomb,
@@ -45,7 +44,6 @@ impl Plugin for ItemPlugin {
 
 fn equip_manager(
     mut ev_equip_take: EventReader<EquipTakeEvent>,
-    mut ev_equip_give: EventWriter<EquipGiveEvent>,
     items: Query<(Entity, &Transform, &Item)>,
     mut commands: Commands,
     objects: Res<Objects>,
@@ -56,7 +54,6 @@ fn equip_manager(
         for (ent, transform, Item(kind)) in items.iter() {
             if transform.translation.distance(*pos) < *reach {
                 match *kind {
-                    ItemType::Axe => ev_equip_give.send(EquipGiveEvent { item: *kind }),
                     ItemType::Cage => {
                         cage_despawn_helper(
                             &mut commands,

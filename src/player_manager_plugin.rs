@@ -1,11 +1,11 @@
-use crate::asset_plugin::Objects;
+
 use crate::chunk_manager_plugin::{Chunk, ChunkChangeEvent, FBLOCK_SIZE, RENDER_DISTANCE};
 use crate::follow_plugin::FollowTarget;
 use crate::follow_plugin::FollowTargetMoveEvent;
-use crate::item_plugin::{EquipGiveEvent, EquipTakeEvent, Item, ItemType};
+use crate::item_plugin::{EquipGiveEvent, EquipTakeEvent, ItemType};
 use crate::share::OldLoc;
-use crate::share::Terrain;
-use crate::templates::make_item;
+
+
 use bevy::app::Plugin;
 use bevy::prelude::*;
 use bevy_mod_picking::events::PickingEvent;
@@ -151,25 +151,9 @@ fn player_movement(
     }
 }
 
-fn equip_player(
-    mut ev_equip: EventReader<EquipGiveEvent>,
-    mut player_current_item: Query<Entity, (&Parent, &Item, Without<Terrain>)>,
-    mut commands: Commands,
-    mut player_inventory: Query<(Entity, &mut Inventory)>,
-    objects: Res<Objects>,
-) {
+fn equip_player(mut ev_equip: EventReader<EquipGiveEvent>) {
     for EquipGiveEvent { item } in ev_equip.iter().last() {
         match item {
-            ItemType::Axe => {
-                for ent in player_current_item.iter_mut() {
-                    commands.entity(ent).despawn_recursive();
-                }
-                for (ent, mut inventory) in player_inventory.iter_mut() {
-                    inventory.hand = Some(*item);
-                    let children = [make_item(&mut commands, *item, &objects)];
-                    commands.entity(ent).insert_children(0, &children);
-                }
-            }
             _ => (),
         }
     }

@@ -8,27 +8,6 @@ use bevy::prelude::*;
 use bevy_mod_picking::*;
 use bevy_rapier3d::prelude::*;
 
-pub fn make_player_lamp(commands: &mut Commands) -> Entity {
-    commands
-        .spawn_bundle(PointLightBundle {
-            point_light: PointLight {
-                intensity: 15000.0,
-                shadows_enabled: true,
-                color: Color::YELLOW,
-                radius: 50.,
-                ..default()
-            },
-            transform: Transform::from_xyz(0.0, 2.0, 0.0),
-            ..default()
-        })
-        .insert(FollowComp {
-            offset: (0., Some(1.), 0.),
-            label: "player".to_string(),
-        })
-        .insert(DynamicPos)
-        .id()
-}
-
 pub fn make_main_camera(commands: &mut Commands) -> Entity {
     commands
         .spawn_bundle(Camera3dBundle {
@@ -184,13 +163,6 @@ pub fn entities_for_tile(
 
 pub fn make_item(commands: &mut Commands, kind: ItemType, objects: &Objects) -> Entity {
     match kind {
-        ItemType::Axe => commands
-            .spawn_bundle(SceneBundle {
-                scene: objects.0[&"axe".to_string()].clone_weak().typed(),
-                ..default()
-            })
-            .insert(Item(ItemType::Axe))
-            .id(),
         ItemType::Cage => commands
             .spawn_bundle(SceneBundle {
                 scene: objects.0[&"cage".to_string()].clone_weak().typed(),

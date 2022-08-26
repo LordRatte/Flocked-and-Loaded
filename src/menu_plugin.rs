@@ -4,7 +4,7 @@ use crate::sound_plugin::{EffectsVolume, MusicVolume, PlayMusic};
 use crate::tutorial_plugin::{ShowTutorial, ShowTutorials, Tutorial};
 use bevy::app::AppExit;
 use bevy::app::Plugin;
-use bevy::prelude::{App, EventReader, EventWriter, Res, ResMut};
+use bevy::prelude::{App, EventWriter, Res, ResMut};
 use bevy_egui::egui::*;
 use bevy_egui::*;
 
@@ -201,7 +201,6 @@ fn pause_menu(
     mut music_volume: ResMut<MusicVolume>,
     mut effects_volume: ResMut<EffectsVolume>,
     mut show_tutorials: ResMut<ShowTutorials>,
-    mut exit: EventWriter<AppExit>,
     mut ev_save: EventWriter<SaveEvent>,
 ) {
     if paused.0 {
