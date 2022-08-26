@@ -7,7 +7,7 @@ on:
 
 env:
   # update with the name of the main binary
-  binary: flocked_and_loaded
+  binary: flocked-and-loaded
 
 
 jobs:
