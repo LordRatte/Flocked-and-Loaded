@@ -1,6 +1,7 @@
 use crate::asset_plugin::{Objects, TriggerLoopAnimEvent};
 use crate::chunk_manager_plugin::{Chunk, ChunkChangeEvent, CHUNK_MID, FBLOCK_SIZE};
 use crate::follow_plugin::FollowTarget;
+use crate::menu_plugin::Menu;
 use crate::player_manager_plugin::Minion;
 use crate::player_manager_plugin::Player;
 use crate::settings_plugin::SaveEvent;
@@ -201,8 +202,12 @@ fn paused_check(
     }
 }
 
-fn controls(keyboard_input: Res<Input<KeyCode>>, mut ev_pause: EventWriter<PauseEvent>) {
-    if keyboard_input.just_pressed(KeyCode::Escape) {
+fn controls(
+    keyboard_input: Res<Input<KeyCode>>,
+    mut ev_pause: EventWriter<PauseEvent>,
+    menu: Res<Menu>,
+) {
+    if keyboard_input.just_pressed(KeyCode::Escape) && *menu == Menu::Game {
         ev_pause.send(PauseEvent);
     }
 }

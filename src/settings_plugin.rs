@@ -32,6 +32,7 @@ impl Plugin for SettingsPlugin {
 fn setup_config(
     mut rmusic_volume: ResMut<MusicVolume>,
     mut rhigh_scores: ResMut<HighScores>,
+    mut rshow_tutorials: ResMut<ShowTutorials>,
     mut reffects_volume: ResMut<EffectsVolume>,
 ) {
     if let Ok(data) = read_to_string("settings.json") {
@@ -42,6 +43,9 @@ fn setup_config(
             }
             if let Some(SettingType::Float(effects_volume)) = settings.get("effects_volume") {
                 reffects_volume.0 = *effects_volume;
+            }
+            if let Some(SettingType::Bool(show_tutorials)) = settings.get("show_tutorials") {
+                rshow_tutorials.0 = *show_tutorials;
             }
             if let Some(SettingType::Pair(ls, hs)) = settings.get("high_scores") {
                 *rhigh_scores = HighScores(*ls, *hs)

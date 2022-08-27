@@ -1,11 +1,10 @@
-
 use crate::chunk_manager_plugin::{Chunk, ChunkChangeEvent, FBLOCK_SIZE, RENDER_DISTANCE};
 use crate::follow_plugin::FollowTarget;
 use crate::follow_plugin::FollowTargetMoveEvent;
 use crate::item_plugin::{EquipGiveEvent, EquipTakeEvent, ItemType};
+use crate::menu_plugin::Menu;
+use crate::settings_plugin::SaveEvent;
 use crate::share::OldLoc;
-
-
 use bevy::app::Plugin;
 use bevy::prelude::*;
 use bevy_mod_picking::events::PickingEvent;
@@ -109,8 +108,9 @@ fn player_movement(
     mut ev_pick: EventWriter<PickingEvent>,
     rapier_config: Res<bevy_rapier3d::plugin::RapierConfiguration>,
     minions: Query<Entity, &Minion>,
+    menu: Res<Menu>,
 ) {
-    if rapier_config.physics_pipeline_active {
+    if rapier_config.physics_pipeline_active && *menu == Menu::Game {
         for (mut ef, mut vel, transform) in head_positions.iter_mut() {
             if keyboard_input.pressed(KeyCode::Left) || keyboard_input.pressed(KeyCode::A) {
                 ef.force.x = -5.0;
@@ -179,8 +179,10 @@ fn on_player_death(
     player: Query<&OldLoc, &Player>,
     minions: Query<Entity, &Minion>,
     mut ev_selection: EventWriter<PickingEvent>,
+    mut ev_save: EventWriter<SaveEvent>,
     mut last_loc: Local<Option<OldLoc>>,
     mut commands: Commands,
+    mut menu: ResMut<Menu>,
 ) {
     if player.is_empty() && last_loc.is_some() {
         if let Some(ent) = minions.iter().last() {
@@ -189,7 +191,8 @@ fn on_player_death(
                 .insert(last_loc.expect("Last Loc should be set from the start"));
             ev_selection.send(PickingEvent::Clicked(ent));
         } else {
-            todo!("Game over");
+            ev_save.send(SaveEvent);
+            *menu = Menu::GameOver;
         }
     } else {
         for loc in player.iter() {

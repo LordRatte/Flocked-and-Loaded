@@ -25,6 +25,7 @@ pub enum Menu {
     Options,
     Credits,
     Game,
+    GameOver,
 }
 
 impl Default for Menu {
@@ -72,6 +73,7 @@ fn menu(
     mut effects_volume: ResMut<EffectsVolume>,
     mut show_tutorials: ResMut<ShowTutorials>,
     mut ev_save: EventWriter<SaveEvent>,
+    current_score: Res<CurrentScore>,
 ) {
     let mut m = *menu;
     if &m != &Menu::Game {
@@ -86,6 +88,7 @@ fn menu(
                 &mut ev_save,
             ),
             Menu::Credits => menu_credits(ui, &mut m),
+            Menu::GameOver => menu_game_over(ui, &current_score),
             _ => (),
         });
         TopBottomPanel::bottom("scores").show(egui_context.ctx_mut(), |ui| {
@@ -109,6 +112,7 @@ fn menu_main(
     exit: &mut EventWriter<AppExit>,
 ) {
     ui.vertical_centered(|ui| {
+        ui.label(sized_text("Flocked and Loaded", Some(60.)));
         if ui
             .add_sized(
                 [200.0, 100.0],
@@ -243,6 +247,8 @@ fn menu_credits(ui: &mut Ui, menu: &mut Menu) {
     }
     ui.label(sized_text("Attributions", None));
     ui.label(sized_text("Thank you to Isabella, Philip, Michael and everyone else who provided suggestions, advice and encouragement", Some(20.)));
+    ui.label(sized_text("Code and Animations", None));
+    ui.label(sized_text("LordRatte", Some(20.)));
     ui.label(sized_text("Music", None));
     ui.label(sized_text(
         "Royalty free music from https://pixabay.com",
@@ -251,5 +257,13 @@ fn menu_credits(ui: &mut Ui, menu: &mut Menu) {
     ui.label(sized_text(
         include_str!("../assets/music/licences.txt"),
         Some(20.),
+    ));
+}
+
+fn menu_game_over(ui: &mut Ui, current_score: &Res<CurrentScore>) {
+    ui.label(sized_text("Game Over", Some(60.)));
+    ui.label(sized_text(
+        format!("Ewe got a score of: {}", current_score.0).as_str(),
+        None,
     ));
 }
