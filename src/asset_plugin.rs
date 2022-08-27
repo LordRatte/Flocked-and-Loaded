@@ -31,13 +31,11 @@ fn load_assets(
 ) {
     //Scenes
     let tree: Handle<Scene> = asset_server.load("tree.glb#Scene0");
-    let axe: Handle<Scene> = asset_server.load("axe.glb#Scene0");
     let cage: Handle<Scene> = asset_server.load("cage.glb#Scene0");
     let sheep: Handle<Scene> = asset_server.load("sheep.glb#Scene0");
     let launcher: Handle<Scene> = asset_server.load("launcher.glb#Scene0");
     let bomb: Handle<Scene> = asset_server.load("bomb.glb#Scene0");
     objects.0.insert("tree".to_string(), tree.clone_untyped());
-    objects.0.insert("axe".to_string(), axe.clone_untyped());
     objects.0.insert("cage".to_string(), cage.clone_untyped());
     objects.0.insert("sheep".to_string(), sheep.clone_untyped());
     objects
@@ -57,11 +55,7 @@ fn load_assets(
         .insert("sphere".to_string(), sphere.clone_untyped());
 
     // Animations
-    let axe_swing: Handle<AnimationClip> = asset_server.load("axe.glb#Animation0");
     let sheep_move: Handle<AnimationClip> = asset_server.load("sheep.glb#Animation0");
-    objects
-        .0
-        .insert("axe_swing".to_string(), axe_swing.clone_untyped());
     objects
         .0
         .insert("sheep_move".to_string(), sheep_move.clone_untyped());
