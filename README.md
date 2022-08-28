@@ -8,9 +8,11 @@ A game about sheep, avoiding obsticles and finding friends (if your friends happ
 
 Use the direct links bellow or go to the releases section
 
-[Linux](https://github.com/LordRatte/Flocked-and-Loaded/releases/latest/download/flocked-and-loaded-linux.zip)
+[Linux](https://github.com/LordRatte/Flocked-and-Loaded/releases/latest/download/flocked-and-loaded-linux.tar.gz)
 
-[MacOS](https://github.com/LordRatte/Flocked-and-Loaded/releases/latest/download/flocked-and-loaded-macos.zip)
+[MacOS](https://github.com/LordRatte/Flocked-and-Loaded/releases/latest/download/flocked-and-loaded-macos.tar.gz)
+
+[MacOS (Silicon)](https://github.com/LordRatte/Flocked-and-Loaded/releases/latest/download/flocked-and-loaded-macos-m1.tar.gz)
 
 [Windows](https://github.com/LordRatte/Flocked-and-Loaded/releases/latest/download/flocked-and-loaded-windows.zip)
 
